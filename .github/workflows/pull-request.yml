@@ -1,4 +1,4 @@
-name: Dotnet Build
+name: Pull Request Verification
 
 env:
   CAST_TOKEN : ${{ secrets.CAST_TOKEN }}
@@ -8,7 +8,7 @@ env:
   CAST_DOMAIN_ID : ${{ secrets.CAST_DOMAIN_ID }}
 
 on:
-  push:
+  pull_request:
     branches:
       - "main"
 
@@ -22,6 +22,7 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
+    - name: Checkout
     - uses: actions/checkout@v3
     - name: Setup .NET 6
       uses: actions/setup-dotnet@v2
@@ -31,13 +32,14 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: Unit Test
+    - name: Unit tests with coverage report
       run: dotnet test Cast.RestClient.Tests --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-    - name: Integration Test
+    - name: Integration tests with coverage report
       run: dotnet test Cast.RestClient.Integration.Tests --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-    - name: Publish coverage reports to Codecov
+    - name: Run Codecov without publishing reports
       uses: codecov/codecov-action@v2
       with:
         token: ${{ secrets.CODECOV_TOKEN }} 
-        fail_ci_if_error: true
+        fail_ci_if_error: false
         verbose: true
+        dry_run: true
