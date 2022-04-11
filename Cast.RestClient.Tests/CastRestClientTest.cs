@@ -1,41 +1,41 @@
-﻿using Cast.RestClient;
-using Cast.RestClient.Authentication;
+﻿using Cast.RestClient.Authentication;
 using Cast.RestClient.Options;
 using System;
 using Xunit;
 
-namespace CastHighlight.RestClient.Tests
+namespace Cast.RestClient.Tests
 {
-    public class CastHighlightClientTest
+    public class CastRestClientTest
     {
         private const string BaseUrl = "https://demo.casthighlight.com/WS2/";
 
         [Fact]
         public void Given_Valid_BasicAuthenticationProvider_And_Options_ReturnsClient()
         {
-            // Prepare
+            // Arrange
             var authenticationProvider = new CastBasicAuthenticationProvider("Test", "Test");
             var options = new CastRestClientOptions(BaseUrl);
 
             // Act
             var client = new CastRestClient(authenticationProvider, options);
 
+            // Assert
             Assert.NotNull(client);
         }
 
         [Fact]
         public void Given_Valid_BearerAuthenticationProvider_And_Options_ReturnsClient()
         {
-            // Prepare
+            // Arrange
             var authenticationProvider = new CastBearerAuthenticationProvider("Test");
             var options = new CastRestClientOptions(BaseUrl);
 
             // Act
             var client = new CastRestClient(authenticationProvider, options);
 
+            // Assert
             Assert.NotNull(client);
         }
-
 
         [Fact]
         public void Given_Null_AuthenticationProvider_ThrowsException()
@@ -48,13 +48,14 @@ namespace CastHighlight.RestClient.Tests
         [Fact]
         public void Shoud_Add_AuthorizationHeader_From_Credentials()
         {
-            // Prepare
+            // Arrange
             var authenticationProvider = new CastBasicAuthenticationProvider("Test", "Test");
             var options = new CastRestClientOptions(BaseUrl);
 
             // Act
             var client = new CastRestClient(authenticationProvider, options);
 
+            // Assert
             Assert.NotNull(client.CastApiClient.HttpClient.DefaultRequestHeaders.Authorization);
 
             var authorizationHeader = client.CastApiClient.HttpClient.DefaultRequestHeaders.Authorization;

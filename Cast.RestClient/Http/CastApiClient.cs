@@ -6,59 +6,70 @@ namespace Cast.RestClient.Http
 {
     internal class CastApiClient : ICastApiClient
     {
+        private readonly string _baseUri;
         private readonly HttpClient _httpClient;
+        private readonly ISerializer _serializer;
 
-        public CastApiClient(HttpClient client)
+        public CastApiClient(string baseUri, HttpClient client)
         {
+            if (baseUri == null) throw new ArgumentNullException(nameof(baseUri));
             if (client == null) throw new ArgumentNullException(nameof(client));
 
+            _baseUri = baseUri;
             _httpClient = client;
+            _serializer = new CustomJsonSerializer();
         }
+
+        public string BaseUri { get => _baseUri; }
 
         public HttpClient HttpClient => _httpClient;
 
-        public async Task<CastResponse<T>> DeleteAsync<T>(string apiPath, object? body, CancellationToken cancel = default)
+        public async Task<ICastResponse<T>> ExecuteCastRequestAsync<T>(ICastRequest request, CancellationToken cancellationToken = default)
         {
-            var httpMessage = new HttpRequestMessage(HttpMethod.Delete, apiPath);
+            var httpMessage = new HttpRequestMessage(request.Method, request.BuildUri(BaseUri).RequestUri);
+
+            if (request.Body != null) httpMessage.Content = JsonContent.Create(request.Body);
+
             httpMessage.SetJsonRequestHeaders();
-            if (body != null) httpMessage.Content = JsonContent.Create(body);
-            return await SendHttpRequest<T>(httpMessage);
+
+            try
+            {
+                var response = await _httpClient.SendAsync(httpMessage, cancellationToken).ConfigureAwait(false);
+                return new CastResponse<T>(response, _serializer)
+                {
+                    Request = request
+                };
+            }
+            catch (Exception ex)
+            {
+                return new CastResponse<T>(ex)
+                {
+                    Request = request
+                };
+            }
         }
 
-        public async Task<CastResponse<T>> GetAsync<T>(string apiPath, CancellationToken cancel = default)
+        public async Task<ICastResponse> ExecuteCastRequestAsync(ICastRequest request, CancellationToken cancellationToken = default)
         {
-            var httpMessage = new HttpRequestMessage(HttpMethod.Get, apiPath);
-            httpMessage.SetJsonRequestHeaders();
-            return await SendHttpRequest<T>(httpMessage);
+            return await ExecuteCastRequestAsync<object>(request, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<CastResponse<T>> PostAsync<T>(string apiPath, object? body, CancellationToken cancel = default)
-        {
-            var httpMessage = new HttpRequestMessage(HttpMethod.Post, apiPath);
-            httpMessage.SetJsonRequestHeaders();
-            if (body != null) httpMessage.Content = JsonContent.Create(body);
-            return await SendHttpRequest<T>(httpMessage);
-        }
-
-        public async Task<CastResponse<T>> PutAsync<T>(string apiPath, object? body, CancellationToken cancel = default)
-        {
-            var httpMessage = new HttpRequestMessage(HttpMethod.Put, apiPath);
-            httpMessage.SetJsonRequestHeaders();
-            if (body != null) httpMessage.Content = JsonContent.Create(body);
-            return await SendHttpRequest<T>(httpMessage);
-        }
-
-        public async Task<CastResponse<T>> SendHttpRequest<T>(HttpRequestMessage request, CancellationToken cancellationToken = default)
+        public async Task<ICastResponse<T>> SendHttpRequestAsync<T>(HttpRequestMessage request, CancellationToken cancellationToken = default)
         {
             try
             {
-                var response = await _httpClient.SendAsync(request, cancellationToken);
-                return new CastResponse<T>(response, new CustomJsonSerializer());
+                var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+                return new CastResponse<T>(response, _serializer);
             }
             catch (Exception ex)
             {
                 return new CastResponse<T>(ex);
             }
+        }
+
+        public async Task<ICastResponse> SendHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken = default)
+        {
+            return await SendHttpRequestAsync<object>(request, cancellationToken).ConfigureAwait(false);
         }
     }
 }

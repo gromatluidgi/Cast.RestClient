@@ -2,6 +2,11 @@
 {
     public class BusinessDate
     {
-        public long Time { get; set; }
+        public static BusinessDate Null
+        {
+            get { return new BusinessDate(); }
+        }
+
+        public long Time { get; protected set; }
     }
 }

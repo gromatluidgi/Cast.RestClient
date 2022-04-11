@@ -10,6 +10,8 @@ namespace Cast.RestClient.Integration.Tests
     {
         private readonly IConfiguration _configuration;
 
+        protected const long DemoApplicationId = 28485;
+
         protected CastRestClientOptions Options { get; private set; } = null!;
 
         protected IntegrationTest()

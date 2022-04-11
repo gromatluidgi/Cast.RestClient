@@ -16,7 +16,7 @@ namespace Cast.RestClient.Objects
         {
             if (obj == null) return -1;
 
-            return Name.CompareTo(((StringEnumeration) obj).Name);
+            return Name.CompareTo(((StringEnumeration)obj).Name);
         }
 
         public override int GetHashCode()

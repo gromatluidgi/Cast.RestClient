@@ -1,6 +1,4 @@
-﻿using Cast.RestClient.Authentication;
-using Cast.RestClient.Http;
-using Cast.RestClient.Http.Abstractions;
+﻿using Cast.RestClient.Http.Abstractions;
 
 namespace Cast.RestClient.Options
 {
@@ -32,7 +30,7 @@ namespace Cast.RestClient.Options
             if (uriResult == null)
                 throw new ArgumentException(nameof(apiUrl));
 
-            if(!result)
+            if (!result)
                 throw new ArgumentException(nameof(apiUrl));
 
             if (IsSecureOnly && uriResult.Scheme != Uri.UriSchemeHttps)

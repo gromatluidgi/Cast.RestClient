@@ -1,26 +1,36 @@
 ﻿using Cast.RestClient.Http.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Cast.RestClient.Http
 {
     public class CustomJsonSerializer : ISerializer
     {
+        private readonly JsonSerializerOptions _options;
+
+        public CustomJsonSerializer()
+        {
+            _options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.Never
+            };
+        }
+
         public T? Deserialize<T>(byte[] value)
         {
             if (value == null)
                 return default(T);
 
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
+            return JsonSerializer.Deserialize<T>(value, _options);
+        }
 
-            return JsonSerializer.Deserialize<T>(value, options);
+        public T? Deserialize<T>(string value)
+        {
+            if (value == null)
+                return default(T);
+
+            return JsonSerializer.Deserialize<T>(value, _options);
         }
 
         public byte[] Serialize(object item)

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cast.RestClient
+﻿namespace Cast.RestClient
 {
     public abstract class Disposable : IDisposable
     {
@@ -31,10 +25,10 @@ namespace Cast.RestClient
             }
         }
 
+        protected virtual void DisposeManagedObjects()
+        { }
 
-        protected virtual void DisposeManagedObjects() { }
-
-        protected virtual void DisposeUnmanagedObjects() { }
-
+        protected virtual void DisposeUnmanagedObjects()
+        { }
     }
 }
