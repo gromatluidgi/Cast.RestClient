@@ -1,13 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 namespace Cast.RestClient.Http.Abstractions
 {
-    public interface ICastResponse<T>
+    public interface ICastResponse
     {
-        T? Data { get; set; }
+        ICastRequest? Request { get; internal set; }
+        HttpContent? Content { get; }
+        HttpStatusCode StatusCode { get; }
+        CastError? Error { get; }
+        bool Success { get; }
+    }
+
+    public interface ICastResponse<out T> : ICastResponse
+    {
+        T? Data { get; }
     }
 }

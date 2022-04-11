@@ -8,9 +8,6 @@ env:
   CAST_DOMAIN_ID : ${{ secrets.CAST_DOMAIN_ID }}
 
 on:
-  pull_request:
-    branches:
-      - "main"
   push:
     branches:
       - "main"
@@ -38,7 +35,7 @@ jobs:
       run: dotnet test Cast.RestClient.Tests --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
     - name: Integration Test
       run: dotnet test Cast.RestClient.Integration.Tests --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-    - name: Publish coverage reports
+    - name: Publish coverage reports to Codecov
       uses: codecov/codecov-action@v2
       with:
         token: ${{ secrets.CODECOV_TOKEN }} 

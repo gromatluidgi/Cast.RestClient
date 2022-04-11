@@ -10,6 +10,5 @@ namespace Cast.RestClient.Models.ValueObjects
         private Technology(string name) : base(name)
         {
         }
-
     }
 }

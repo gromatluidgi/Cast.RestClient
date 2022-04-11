@@ -1,11 +1,10 @@
 ﻿using Cast.RestClient.Http.Abstractions;
+using System.Diagnostics;
 using System.Net;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Cast.RestClient.Http
 {
-    public class CastResponse
+    public class CastResponse: ICastResponse
     {
         public CastResponse(HttpResponseMessage message)
         {
@@ -28,19 +27,27 @@ namespace Cast.RestClient.Http
             Error = new ApiError(-1, exception.Message);
         }
 
-        public HttpContent? Content { get; set; }
+        public HttpContent? Content { get; }
         public CastError? Error { get; internal set; }
+        public ICastRequest? Request { get; set; }
         public HttpStatusCode StatusCode { get; }
         public bool Success => Error == null;
     }
 
-    public class CastResponse<T> : CastResponse
+    public class CastResponse<T> : CastResponse, ICastResponse<T>
     {
         public CastResponse(HttpResponseMessage message, ISerializer? serializer = default) : base(message)
         {
-            if (serializer != null && Content != null)
+            if (serializer != null && CanDeserializeContent())
             {
-                Data = serializer.Deserialize<T>(Content.ReadAsByteArrayAsync().Result);
+#if DEBUG
+                var watch = Stopwatch.StartNew();
+#endif
+                Data = serializer.Deserialize<T>(Content!.ReadAsStringAsync().Result);
+#if DEBUG
+                watch.Stop();
+                Console.WriteLine($"Elapsed time for deserializing data from JSON: {watch.ElapsedMilliseconds}");
+#endif
             }
         }
 
@@ -50,5 +57,11 @@ namespace Cast.RestClient.Http
 
         public T? Data { get; internal set; }
 
+        private bool CanDeserializeContent()
+        {
+            if (Content == null) return false;
+            if (Content.Headers.ContentLength == 0) return false;
+            return true;
+        }
     }
 }

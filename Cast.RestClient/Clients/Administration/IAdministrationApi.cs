@@ -1,10 +1,11 @@
 ﻿using Cast.RestClient.Http;
+using Cast.RestClient.Http.Abstractions;
 using Cast.RestClient.Models;
 
 namespace Cast.RestClient.Clients.Administration
 {
     public interface IAdministrationApi
     {
-        Task<CastResponse<Company>> GetCompanyByIdAsync(int companyId);
+        Task<ICastResponse<Company>> GetCompanyByIdAsync(int companyId);
     }
 }

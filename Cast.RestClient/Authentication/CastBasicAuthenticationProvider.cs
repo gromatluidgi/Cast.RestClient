@@ -1,6 +1,4 @@
-﻿using Cast.RestClient.Extensions;
-using System.Security;
-using System.Text;
+﻿using System.Text;
 
 namespace Cast.RestClient.Authentication
 {

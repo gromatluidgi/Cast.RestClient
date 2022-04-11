@@ -16,12 +16,12 @@ namespace Cast.RestClient.Clients.Administration
             _client = client;
         }
 
-        public async Task<CastResponse<Company>> GetCompanyByIdAsync(int companyId)
+        public async Task<ICastResponse<Company>> GetCompanyByIdAsync(int companyId)
         {
-            var apiPath = string.Format(companyDetailsEnpoint, companyId);
+            var uriPath = string.Format(companyDetailsEnpoint, companyId);
+            var request = new CastRequest(HttpMethod.Get, uriPath);
 
-            var response = await _client.GetAsync<Company>(apiPath);
-            if (response == null) throw new InvalidOperationException();
+            var response = await _client.ExecuteCastRequestAsync<Company>(request);
 
             return response;
         }

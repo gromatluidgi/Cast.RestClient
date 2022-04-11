@@ -1,8 +1,4 @@
-﻿using Cast.RestClient.Extensions;
-using System.Security;
-using System.Text;
-
-namespace Cast.RestClient.Authentication
+﻿namespace Cast.RestClient.Authentication
 {
     public sealed class CastBearerAuthenticationProvider : CastAuthenticationProvider
     {
@@ -11,7 +7,7 @@ namespace Cast.RestClient.Authentication
             Token = IsValidToken(token);
         }
 
-        public string Token { get; internal set;  }
+        public string Token { get; internal set; }
 
         public override string GetAuthorizationHeader()
         {
@@ -30,7 +26,6 @@ namespace Cast.RestClient.Authentication
         protected override void DisposeUnmanagedObjects()
         {
             Token = string.Empty;
-
         }
     }
 }

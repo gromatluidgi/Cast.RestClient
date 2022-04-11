@@ -1,19 +1,17 @@
-﻿using Cast.RestClient.Authentication;
-
-namespace Cast.RestClient.Http.Abstractions
+﻿namespace Cast.RestClient.Http.Abstractions
 {
     public interface ICastApiClient
     {
         HttpClient HttpClient { get; }
 
-        Task<CastResponse<T>> SendHttpRequest<T>(HttpRequestMessage request, CancellationToken cancellationToken = default);
+        string BaseUri { get; }
 
-        Task<CastResponse<T>> GetAsync<T>(string apiPath, CancellationToken cancel = default);
+        Task<ICastResponse> SendHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken = default);
 
-        Task<CastResponse<T>> PostAsync<T>(string apiPath, object? body, CancellationToken cancel = default);
+        Task<ICastResponse<T>> SendHttpRequestAsync<T>(HttpRequestMessage request, CancellationToken cancellationToken = default);
 
-        Task<CastResponse<T>> PutAsync<T>(string apiPath, object? body, CancellationToken cancel = default);
+        Task<ICastResponse<T>> ExecuteCastRequestAsync<T>(ICastRequest request, CancellationToken cancellationToken = default);
 
-        Task<CastResponse<T>> DeleteAsync<T>(string apiPath, object? body, CancellationToken cancel = default);
+        Task<ICastResponse> ExecuteCastRequestAsync(ICastRequest request, CancellationToken cancellationToken = default);
     }
 }

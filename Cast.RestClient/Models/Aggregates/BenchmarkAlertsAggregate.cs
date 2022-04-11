@@ -9,7 +9,6 @@ namespace Cast.RestClient.Models.Aggregates
     {
         public BenchmarkAlertsAggregate()
         {
-
         }
     }
 }

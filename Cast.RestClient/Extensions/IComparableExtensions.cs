@@ -13,7 +13,7 @@
         /// <typeparam name="T">The type of object to compare with</typeparam>
         public static int NullSafeCompareTo<T>(this IComparable<T> a, T b)
         {
-            return a == null ? ZeroIfNull(b) : CompareIfNotNull(b,a);
+            return a == null ? ZeroIfNull(b) : CompareIfNotNull(b, a);
         }
 
         /// <summary>

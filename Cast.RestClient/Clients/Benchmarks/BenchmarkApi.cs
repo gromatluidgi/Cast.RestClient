@@ -16,21 +16,30 @@ namespace Cast.RestClient.Clients.Benchmarks
             _client = client;
         }
 
-        public async Task<CastResponse<BenchmarkAlertsAggregate>> GetAllBenchmarkAlertsAsync()
+        public async Task<ICastResponse<BenchmarkAlertsAggregate>> GetAllBenchmarkAlertsAsync()
         {
-            var response = await _client.GetAsync<BenchmarkAlertsAggregate>(benchmarkAlertsRoute);
+            var request = new CastRequest(HttpMethod.Get, benchmarkAlertsRoute);
+
+            var response = await _client.ExecuteCastRequestAsync<BenchmarkAlertsAggregate>(request);
+
             return response;
         }
 
-        public async Task<CastResponse<BenchmarkAlertsAggregate>> GetBenchmarkAlertsByTechnologiesAsync()
+        public async Task<ICastResponse<BenchmarkAlertsAggregate>> GetBenchmarkAlertsByTechnologiesAsync()
         {
-            var response = await _client.PostAsync<BenchmarkAlertsAggregate>(benchmarkMetricsRoute, null);
+            var request = new CastRequest(HttpMethod.Post, benchmarkMetricsRoute);
+
+            var response = await _client.ExecuteCastRequestAsync<BenchmarkAlertsAggregate>(request);
+
             return response;
         }
 
-        public async Task<CastResponse<Benchmark>> GetComputedBenchmarkMetricsAsync()
+        public async Task<ICastResponse<Benchmark>> GetComputedBenchmarkMetricsAsync()
         {
-            var response = await _client.GetAsync<Benchmark>(benchmarkMetricsRoute);
+            var request = new CastRequest(HttpMethod.Get, benchmarkMetricsRoute);
+
+            var response = await _client.ExecuteCastRequestAsync<Benchmark>(request);
+
             return response;
         }
     }

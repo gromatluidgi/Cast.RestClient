@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace Cast.RestClient.Models.ValueObjects
 {
     public class BenchmarkAlert
     {
-
-        public BenchmarkAlert() { }
+        public BenchmarkAlert()
+        { }
 
         [JsonPropertyName("min")]
         public double Minimum { get; set; }
@@ -20,6 +15,5 @@ namespace Cast.RestClient.Models.ValueObjects
 
         [JsonPropertyName("avg")]
         public double Average { get; set; }
-
     }
 }

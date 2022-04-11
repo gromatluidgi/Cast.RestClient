@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cast.RestClient.Helpers
+namespace Cast.RestClient.Clients.Applications.Queries
 {
-    internal class UrlBuilder
+    public class AllApplicationsQuery
     {
 
     }

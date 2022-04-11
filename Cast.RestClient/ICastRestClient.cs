@@ -1,7 +1,7 @@
 ﻿using Cast.RestClient.Clients.Administration;
+using Cast.RestClient.Clients.Applications;
 using Cast.RestClient.Clients.Benchmarks;
 using Cast.RestClient.Clients.Domains;
-using Cast.RestClient.Http;
 
 namespace Cast.RestClient
 {
@@ -14,5 +14,7 @@ namespace Cast.RestClient
         IBenchmarkApi Benchmark { get; }
 
         IDomainApi Domain { get; }
+
+        IApplicationApi Application { get; }
     }
 }
