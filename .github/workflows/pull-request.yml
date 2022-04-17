@@ -44,7 +44,7 @@ jobs:
     - name: Generate code coverage summary report
       uses: irongut/CodeCoverageSummary@v1.2.0
       with:
-        filename: Cast.RestClient.Tests/coverage.opencover.xml
+        filename: ./Cast.RestClient.Tests/coverage.opencover.xml
         badge: true
         format: 'markdown'
         output: 'both'
