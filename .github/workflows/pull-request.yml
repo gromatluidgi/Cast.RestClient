@@ -14,7 +14,6 @@ on:
 
 jobs:
   build:
-
     strategy:
       matrix:
         platform: [ubuntu-latest]
@@ -25,6 +24,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       
+    - name: Perform security code scan
+      uses: security-code-scan/security-code-scan-results-action@v1.3
+
     - name: Setup .NET 6
       uses: actions/setup-dotnet@v2
       with:
