@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Cast.RestClient.Helpers;
+using System.Text;
 
 namespace Cast.RestClient.Authentication
 {
@@ -6,11 +7,15 @@ namespace Cast.RestClient.Authentication
     {
         public CastBasicAuthenticationProvider(string login, string password)
         {
-            Login = IsValidLogin(login);
-            Password = IsValidPassword(password);
+            Ensure.ArgumentNotNull(login, nameof(login));
+            Ensure.ArgumentNotNull(password, nameof(password));
+
+            Login = login;
+            Password = password;
         }
 
         public string Login { get; internal set; }
+
         public string Password { get; internal set; }
 
         public override string GetAuthorizationHeader()
@@ -19,24 +24,6 @@ namespace Cast.RestClient.Authentication
             var encodedCredentials = Convert.ToBase64String(Encoding.UTF8.GetBytes(credentialsChain));
 
             return string.Format("Basic {0}", encodedCredentials);
-        }
-
-        internal string IsValidLogin(string login)
-        {
-            if (string.IsNullOrEmpty(login) || string.IsNullOrWhiteSpace(login))
-            {
-                throw new ArgumentException(nameof(login));
-            }
-            return login;
-        }
-
-        internal string IsValidPassword(string password)
-        {
-            if (string.IsNullOrEmpty(password) || string.IsNullOrWhiteSpace(password))
-            {
-                throw new ArgumentException(nameof(password));
-            }
-            return password;
         }
 
         protected override void DisposeUnmanagedObjects()

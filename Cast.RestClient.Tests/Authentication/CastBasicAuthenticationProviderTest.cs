@@ -1,5 +1,4 @@
 ﻿using Cast.RestClient.Authentication;
-using System;
 using Xunit;
 
 namespace Cast.RestClient.Tests.Authentication

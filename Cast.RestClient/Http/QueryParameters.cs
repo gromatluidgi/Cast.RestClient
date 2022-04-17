@@ -8,12 +8,11 @@ namespace Cast.RestClient.Http
 {
     public abstract class QueryParameters
     {
-        static readonly ConcurrentDictionary<Type, List<QueryParameter>> _propertiesMap = new ConcurrentDictionary<Type, List<QueryParameter>>();
+        private static readonly ConcurrentDictionary<Type, List<QueryParameter>> _propertiesMap = new ConcurrentDictionary<Type, List<QueryParameter>>();
 
         /// <summary>
         /// Converts the derived object into a dictionary that can be used to supply query string parameters.
         /// </summary>
-        /// <returns></returns>
         public virtual IDictionary<string, string> ToParametersDictionary()
         {
             var map = _propertiesMap.GetOrAdd(GetType(), GetPropertyParametersForType);
@@ -24,15 +23,14 @@ namespace Cast.RestClient.Http
                     select new { key, value }).ToDictionary(kvp => kvp.key, kvp => kvp.value);
         }
 
-
-        static List<QueryParameter> GetPropertyParametersForType(Type type)
+        private static List<QueryParameter> GetPropertyParametersForType(Type type)
         {
             return type.GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .Select(p => new QueryParameter(p))
                 .ToList();
         }
 
-        static Func<PropertyInfo, object, string> GetValueFunc(Type propertyType)
+        private static Func<PropertyInfo, object, string> GetValueFunc(Type propertyType)
         {
             // get underlying type if nullable
             propertyType = Nullable.GetUnderlyingType(propertyType) ?? propertyType;
@@ -50,9 +48,14 @@ namespace Cast.RestClient.Http
             {
                 return (prop, value) =>
                 {
-                    if (value == null) return null!;
-                    return ((DateTimeOffset)value).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ",
-                      CultureInfo.InvariantCulture);
+                    if (value == null)
+                    {
+                        return null!;
+                    }
+
+                    return ((DateTimeOffset)value).ToUniversalTime().ToString(
+                        "yyyy-MM-ddTHH:mm:ssZ",
+                        CultureInfo.InvariantCulture);
                 };
             }
 
@@ -60,10 +63,14 @@ namespace Cast.RestClient.Http
             {
                 var enumToAttributeDictionary = Enum.GetNames(propertyType)
                     .ToDictionary(name => name, name => GetParameterAttributeValueForEnumName(propertyType, name));
-                
+
                 return (prop, value) =>
                 {
-                    if (value == null) return null!;
+                    if (value == null)
+                    {
+                        return null!;
+                    }
+
                     string attributeValue;
 
                     return enumToAttributeDictionary.TryGetValue(value.ToString()!, out attributeValue!)
@@ -74,29 +81,35 @@ namespace Cast.RestClient.Http
 
             return (prop, value) =>
             {
-                if (value == null) return null!;
+                if (value == null)
+                {
+                    return null!;
+                }
+
                 return value.ToString()!;
             };
         }
 
-        static string GetParameterAttributeValueForEnumName(Type enumType, string name)
+        private static string GetParameterAttributeValueForEnumName(Type enumType, string name)
         {
             var member = enumType.GetMember(name).FirstOrDefault();
 
-            if (member == null) return null!;
+            if (member == null)
+            {
+                return null!;
+            }
 
             var attribute = member.GetCustomAttributes(typeof(JsonPropertyNameAttribute), false)
                 .Cast<JsonPropertyNameAttribute>()
                 .FirstOrDefault();
 
-
-            return attribute == null ? null! :attribute.Name;
+            return attribute == null ? null! : attribute.Name;
         }
 
-        class QueryParameter
+        internal class QueryParameter
         {
-            readonly Func<PropertyInfo, object, string> _valueFunc;
-            readonly PropertyInfo _property;
+            private readonly Func<PropertyInfo, object, string> _valueFunc;
+            private readonly PropertyInfo _property;
 
             public QueryParameter(PropertyInfo property)
             {
@@ -112,7 +125,7 @@ namespace Cast.RestClient.Http
                 return _valueFunc(_property, _property.GetValue(instance, null)!);
             }
 
-            static string GetParameterKeyFromProperty(PropertyInfo property)
+            private static string GetParameterKeyFromProperty(PropertyInfo property)
             {
                 var attribute = property.GetCustomAttributes(typeof(JsonPropertyNameAttribute), false)
                     .Cast<JsonPropertyNameAttribute>()

@@ -13,14 +13,16 @@ namespace Cast.RestClient.Http
             _options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
-                DefaultIgnoreCondition = JsonIgnoreCondition.Never
+                DefaultIgnoreCondition = JsonIgnoreCondition.Never,
             };
         }
 
         public T? Deserialize<T>(byte[] value)
         {
             if (value == null)
+            {
                 return default(T);
+            }
 
             return JsonSerializer.Deserialize<T>(value, _options);
         }
@@ -28,7 +30,9 @@ namespace Cast.RestClient.Http
         public T? Deserialize<T>(string value)
         {
             if (value == null)
+            {
                 return default(T);
+            }
 
             return JsonSerializer.Deserialize<T>(value, _options);
         }

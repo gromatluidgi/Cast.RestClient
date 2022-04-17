@@ -7,7 +7,8 @@ namespace Cast.RestClient.Models.ValueObjects
         public static readonly Technology KSH = new Technology("KSH");
         public static readonly Technology GO = new Technology("GO");
 
-        private Technology(string name) : base(name)
+        private Technology(string name)
+            : base(name)
         {
         }
     }

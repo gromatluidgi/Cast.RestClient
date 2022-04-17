@@ -8,9 +8,9 @@ namespace Cast.RestClient.Integration.Tests
 {
     public abstract class IntegrationTest
     {
-        private readonly IConfiguration _configuration;
-
         protected const long DemoApplicationId = 28485;
+
+        private readonly IConfiguration _configuration;
 
         protected CastRestClientOptions Options { get; private set; } = null!;
 
@@ -29,7 +29,7 @@ namespace Cast.RestClient.Integration.Tests
 
             Options = new CastRestClientOptions(_configuration["CAST_API_URL"])
             {
-                DomainId = Convert.ToInt64(_configuration["CAST_DOMAIN_ID"])
+                DomainId = Convert.ToInt64(_configuration["CAST_DOMAIN_ID"]),
             };
 
             return new CastRestClient(authenticationProvider, Options);
@@ -40,7 +40,7 @@ namespace Cast.RestClient.Integration.Tests
             var authenticationProvider = new CastBasicAuthenticationProvider(_configuration["CAST_LOGIN"], _configuration["CAST_PASSWORD"]);
             Options = new CastRestClientOptions(_configuration["CAST_API_URL"])
             {
-                DomainId = Convert.ToInt64(_configuration["CAST_DOMAIN_ID"])
+                DomainId = Convert.ToInt64(_configuration["CAST_DOMAIN_ID"]),
             };
 
             return new CastRestClient(authenticationProvider, Options);
@@ -48,11 +48,10 @@ namespace Cast.RestClient.Integration.Tests
 
         protected virtual ICastRestClient GetTokenAuthClient()
         {
-
             var authenticationProvider = new CastBearerAuthenticationProvider(_configuration["CAST_ACCESS_TOKEN"]);
             Options = new CastRestClientOptions(_configuration["CAST_API_URL"])
             {
-                DomainId = Convert.ToInt64(_configuration["CAST_DOMAIN_ID"])
+                DomainId = Convert.ToInt64(_configuration["CAST_DOMAIN_ID"]),
             };
 
             return new CastRestClient(authenticationProvider, Options);

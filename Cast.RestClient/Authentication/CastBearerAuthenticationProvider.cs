@@ -20,6 +20,7 @@
             {
                 throw new ArgumentException(nameof(token));
             }
+
             return token;
         }
 

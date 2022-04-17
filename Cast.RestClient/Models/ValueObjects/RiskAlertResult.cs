@@ -5,6 +5,7 @@ namespace Cast.RestClient.Models.ValueObjects
     public class RiskAlertResult : IAlert
     {
         public string Alert { get; set; } = string.Empty;
+
         public object? Labels { get; set; }
 
         public float Usage { get; set; }

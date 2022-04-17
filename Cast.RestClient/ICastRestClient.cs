@@ -7,8 +7,6 @@ namespace Cast.RestClient
 {
     public interface ICastRestClient
     {
-        void SetAuthorizationHeader(string authorization);
-
         IAdministrationApi Administration { get; }
 
         IBenchmarkApi Benchmark { get; }
@@ -16,5 +14,7 @@ namespace Cast.RestClient
         IDomainApi Domain { get; }
 
         IApplicationApi Application { get; }
+
+        void SetAuthorizationHeader(string authorization);
     }
 }

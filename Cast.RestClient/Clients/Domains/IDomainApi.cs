@@ -1,5 +1,4 @@
-﻿using Cast.RestClient.Http;
-using Cast.RestClient.Http.Abstractions;
+﻿using Cast.RestClient.Http.Abstractions;
 using Cast.RestClient.Models;
 using Cast.RestClient.Models.Enums;
 

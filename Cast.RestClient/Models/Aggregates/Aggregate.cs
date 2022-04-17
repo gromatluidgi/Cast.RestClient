@@ -3,7 +3,8 @@
     public class Aggregate
     {
         public Aggregate()
-        { }
+        {
+        }
     }
 
     public class Aggregate<TKey, TValue> : Aggregate

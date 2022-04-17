@@ -10,6 +10,7 @@ namespace Cast.RestClient.Extensions
             {
                 httpMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             }
+
             httpMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
     }

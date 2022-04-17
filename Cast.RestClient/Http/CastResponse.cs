@@ -4,11 +4,14 @@ using System.Net;
 
 namespace Cast.RestClient.Http
 {
-    public class CastResponse: ICastResponse
+    public class CastResponse : ICastResponse
     {
         public CastResponse(HttpResponseMessage message)
         {
-            if (message == null) throw new ArgumentNullException(nameof(message));
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
 
             if (message.IsSuccessStatusCode)
             {
@@ -28,15 +31,20 @@ namespace Cast.RestClient.Http
         }
 
         public HttpContent? Content { get; }
+
         public CastError? Error { get; internal set; }
+
         public ICastRequest? Request { get; set; }
+
         public HttpStatusCode StatusCode { get; }
+
         public bool Success => Error == null;
     }
 
     public class CastResponse<T> : CastResponse, ICastResponse<T>
     {
-        public CastResponse(HttpResponseMessage message, ISerializer? serializer = default) : base(message)
+        public CastResponse(HttpResponseMessage message, ISerializer? serializer = default)
+            : base(message)
         {
             if (serializer != null && CanDeserializeContent())
             {
@@ -51,7 +59,8 @@ namespace Cast.RestClient.Http
             }
         }
 
-        public CastResponse(Exception exception) : base(exception)
+        public CastResponse(Exception exception)
+            : base(exception)
         {
         }
 
@@ -59,8 +68,16 @@ namespace Cast.RestClient.Http
 
         private bool CanDeserializeContent()
         {
-            if (Content == null) return false;
-            if (Content.Headers.ContentLength == 0) return false;
+            if (Content == null)
+            {
+                return false;
+            }
+
+            if (Content.Headers.ContentLength == 0)
+            {
+                return false;
+            }
+
             return true;
         }
     }

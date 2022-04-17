@@ -5,7 +5,8 @@ namespace Cast.RestClient.Models.ValueObjects
     public class BenchmarkAlert
     {
         public BenchmarkAlert()
-        { }
+        {
+        }
 
         [JsonPropertyName("min")]
         public double Minimum { get; set; }

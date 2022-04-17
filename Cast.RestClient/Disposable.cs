@@ -2,7 +2,7 @@
 {
     public abstract class Disposable : IDisposable
     {
-        protected bool disposedValue;
+        private bool disposedValue;
 
         // Dispose pattern implementation called by consumers.
         public void Dispose()
@@ -26,9 +26,11 @@
         }
 
         protected virtual void DisposeManagedObjects()
-        { }
+        {
+        }
 
         protected virtual void DisposeUnmanagedObjects()
-        { }
+        {
+        }
     }
 }

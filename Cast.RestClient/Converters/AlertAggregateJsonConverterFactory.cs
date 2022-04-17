@@ -1,15 +1,15 @@
-﻿using Cast.RestClient.Models.Aggregates;
+﻿using Cast.RestClient.Models.Abstractions;
+using Cast.RestClient.Models.Aggregates;
 using Cast.RestClient.Models.ValueObjects;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Cast.RestClient.Converters
 {
-    /**
-     * This converter provide a specialized recursive way to transform TopRiskAggregate json dictionary,
-     * into <see cref="Aggregate"/> wrapped dictionary of generic KeyValuePair composed of abstract <see cref="IAlert"/>.
-     */
-
+    /// <summary>
+    /// This converter provide a specialized recursive way to transform TopRiskAggregate json dictionary,
+    /// into <see cref="Aggregate"/> wrapped dictionary of generic KeyValuePair composed of abstract <see cref="IAlert"/>.
+    /// </summary>
     internal class AlertAggregateJsonConverterFactory : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
@@ -23,12 +23,12 @@ namespace Cast.RestClient.Converters
             Type keyType;
             Type valueType;
 
-            if (typeToConvert.IsAssignableTo(typeof(Aggregate)) && typeToConvert.BaseType!.IsGenericType)
+            if (typeof(Aggregate).IsAssignableFrom(typeToConvert) && typeToConvert.BaseType!.IsGenericType)
             {
                 keyType = typeToConvert.BaseType.GetGenericArguments()[0];
                 valueType = typeToConvert.BaseType.GetGenericArguments()[1];
             }
-            else if (typeToConvert.IsAssignableTo(typeof(Aggregate)) && typeToConvert.GenericTypeArguments.Length > 0)
+            else if (typeof(Aggregate).IsAssignableFrom(typeToConvert) && typeToConvert.GenericTypeArguments.Length > 0)
             {
                 keyType = typeToConvert.GetGenericArguments()[0];
                 valueType = typeToConvert.GetGenericArguments()[1];
@@ -123,7 +123,7 @@ namespace Cast.RestClient.Converters
                         Converters =
                         {
                             new AlertJsonConverterFactory(typeof(FileAlertResult)),
-                        }
+                        },
                     };
                     return newOptions;
                 }
@@ -135,10 +135,11 @@ namespace Cast.RestClient.Converters
                         Converters =
                         {
                             new AlertJsonConverterFactory(typeof(RiskAlertResult)),
-                        }
+                        },
                     };
                     return newOptions;
                 }
+
                 return new(options);
             }
         }
