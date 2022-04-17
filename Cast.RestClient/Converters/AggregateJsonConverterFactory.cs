@@ -4,11 +4,10 @@ using System.Text.Json.Serialization;
 
 namespace Cast.RestClient.Converters
 {
-    /**
-     * This converter provide a generic recursive way to transform inconsistent json dictionary,
-     * into <see cref="Aggregate"/> wrapped dictionary of generic KeyValuePair.
-     */
-
+    /// <summary>
+    /// This converter provide a generic recursive way to transform inconsistent json dictionary,
+    /// into <see cref="Aggregate"/> wrapped dictionary of generic KeyValuePair.
+    /// </summary>
     internal class AggregateJsonConverterFactory : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
@@ -22,12 +21,12 @@ namespace Cast.RestClient.Converters
             Type keyType;
             Type valueType;
 
-            if (typeToConvert.IsAssignableTo(typeof(Aggregate)) && typeToConvert.BaseType!.IsGenericType)
+            if (typeof(Aggregate).IsAssignableFrom(typeToConvert) && typeToConvert.BaseType!.IsGenericType)
             {
                 keyType = typeToConvert.BaseType.GetGenericArguments()[0];
                 valueType = typeToConvert.BaseType.GetGenericArguments()[1];
             }
-            else if (typeToConvert.IsAssignableTo(typeof(Aggregate)) && typeToConvert.GenericTypeArguments.Length > 0)
+            else if (typeof(Aggregate).IsAssignableFrom(typeToConvert) && typeToConvert.GenericTypeArguments.Length > 0)
             {
                 keyType = typeToConvert.GetGenericArguments()[0];
                 valueType = typeToConvert.GetGenericArguments()[1];

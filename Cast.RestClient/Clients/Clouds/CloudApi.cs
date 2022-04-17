@@ -4,10 +4,10 @@ namespace Cast.RestClient.Clients.Clouds
 {
     public class CloudApi : ICloudApi
     {
-        private const string getContainerization = "cloud/containerization/{0}";
-        private const string getData = "cloud/data/{0}";
-        private const string getRequirements = "cloud/requirements/{0}";
-        private const string getTransferability = "cloud/transferability/{0}";
+        private const string GetContainerization = "cloud/containerization/{0}";
+        private const string GetData = "cloud/data/{0}";
+        private const string GetRequirements = "cloud/requirements/{0}";
+        private const string GetTransferability = "cloud/transferability/{0}";
 
         public CloudApi(ICastApiClient client)
         {

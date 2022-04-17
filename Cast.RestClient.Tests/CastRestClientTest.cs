@@ -56,9 +56,9 @@ namespace Cast.RestClient.Tests
             var client = new CastRestClient(authenticationProvider, options);
 
             // Assert
-            Assert.NotNull(client.CastApiClient.HttpClient.DefaultRequestHeaders.Authorization);
+            Assert.NotNull(client.HttpRequestHeaders.Authorization);
 
-            var authorizationHeader = client.CastApiClient.HttpClient.DefaultRequestHeaders.Authorization;
+            var authorizationHeader = client.HttpRequestHeaders.Authorization;
             var header = string.Format("{0} {1}", authorizationHeader!.Scheme, authorizationHeader.Parameter);
 
             Assert.Equal("Basic VGVzdDpUZXN0", header);

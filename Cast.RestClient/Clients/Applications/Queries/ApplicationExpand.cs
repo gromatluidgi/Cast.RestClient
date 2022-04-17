@@ -1,6 +1,7 @@
 ﻿namespace Cast.RestClient.Clients.Applications.Queries
 {
-    public class AllApplicationsQuery
+    public enum ApplicationExpand
     {
+        Survey,
     }
 }

@@ -1,42 +1,18 @@
-﻿using Cast.RestClient.Http.Abstractions;
+﻿using Cast.RestClient.Helpers;
 
 namespace Cast.RestClient.Options
 {
     public class CastRestClientOptions
     {
-        public CastRestClientOptions(string highlightApiUrl)
+        public CastRestClientOptions(string highlightApiUrl, bool secureOnly = true)
         {
-            HighlightApiUrl = ValidateApiUrl(highlightApiUrl);
+            Ensure.ValidApiUrl(highlightApiUrl, secureOnly);
+
+            HighlightApiUrl = highlightApiUrl;
         }
-
-        public bool IsDebug { get; set; } = false;
-
-        /// <summary>
-        /// Indicates if the client should only use https. Default is true.
-        /// </summary>
-        public bool IsSecureOnly { get; set; } = true;
 
         public string HighlightApiUrl { get; internal set; }
 
         public long DomainId { get; set; }
-
-        public ISerializer? Serializer { get; set; }
-
-        private string ValidateApiUrl(string apiUrl)
-        {
-            Uri uriResult;
-            bool result = Uri.TryCreate(apiUrl, UriKind.Absolute, out uriResult!);
-
-            if (uriResult == null)
-                throw new ArgumentException(nameof(apiUrl));
-
-            if (!result)
-                throw new ArgumentException(nameof(apiUrl));
-
-            if (IsSecureOnly && uriResult.Scheme != Uri.UriSchemeHttps)
-                throw new ArgumentException(nameof(apiUrl));
-
-            return apiUrl;
-        }
     }
 }

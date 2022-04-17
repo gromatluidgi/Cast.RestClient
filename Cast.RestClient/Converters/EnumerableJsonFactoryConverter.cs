@@ -39,9 +39,13 @@ namespace Cast.RestClient.Converters
                     T value = JsonSerializer.Deserialize<T>(ref reader, options)!;
 
                     if (value == null)
+                    {
                         throw new FormatException();
+                    }
 
+#if NETSTANDARD
                     enumarable = enumarable.Append(value!);
+#endif
                 }
 
                 throw new FormatException();

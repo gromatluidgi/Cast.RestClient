@@ -29,10 +29,11 @@ namespace Cast.RestClient.Integration.Tests.Endpoints.Applications
             var client = GetBasicAuthClient();
             var applications = new List<Application>
             {
-                new Application() {
+                new Application()
+                {
                     Name = "Test",
-                    Domains = new List<Domain>()
-                }
+                    Domains = new List<Domain>(),
+                },
             };
 
             // Act

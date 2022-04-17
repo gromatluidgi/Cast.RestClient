@@ -6,44 +6,55 @@ using Cast.RestClient.Clients.Domains;
 using Cast.RestClient.Http;
 using Cast.RestClient.Http.Abstractions;
 using Cast.RestClient.Options;
+using System.Net.Http.Headers;
 
 namespace Cast.RestClient
 {
     public class CastRestClient : Disposable, ICastRestClient
     {
-        private readonly HttpClient _httpClient;
-
-        public CastRestClient(
-            ICastAuthenticationProvider authenticationProvider,
-            CastRestClientOptions options)
+        public CastRestClient(CastRestClientOptions options)
         {
-            _httpClient = new HttpClient();
+            HttpClient = new HttpClient();
 
-            SetAuthorizationHeader(authenticationProvider.GetAuthorizationHeader());
-
-            CastApiClient = new CastApiClient(options.HighlightApiUrl, _httpClient);
+            CastApiClient = new CastApiClient(options.HighlightApiUrl, HttpClient);
             Administration = new AdministrationApi(CastApiClient);
             Benchmark = new BenchmarkApi(CastApiClient);
             Domain = new DomainApi(CastApiClient);
             Application = new ApplicationApi(CastApiClient);
         }
 
+        public CastRestClient(
+            ICastAuthenticationProvider authenticationProvider,
+            CastRestClientOptions options)
+            : this(options)
+        {
+            SetAuthorizationHeader(authenticationProvider.GetAuthorizationHeader());
+        }
+
         public IAdministrationApi Administration { get; }
+
         public IApplicationApi Application { get; }
+
         public IBenchmarkApi Benchmark { get; }
+
         public ICastApiClient CastApiClient { get; }
+
         public IDomainApi Domain { get; }
+
+        internal HttpClient HttpClient { get; }
+
+        internal HttpRequestHeaders HttpRequestHeaders => HttpClient.DefaultRequestHeaders;
 
         public void SetAuthorizationHeader(string authorization)
         {
-            _httpClient.DefaultRequestHeaders.Remove("Authorization");
-            _httpClient.DefaultRequestHeaders.Add("Authorization", authorization);
+            HttpRequestHeaders.Remove("Authorization");
+            HttpRequestHeaders.Add("Authorization", authorization);
         }
 
         protected override void DisposeManagedObjects()
         {
             base.DisposeManagedObjects();
-            _httpClient.Dispose();
+            HttpClient.Dispose();
         }
     }
 }

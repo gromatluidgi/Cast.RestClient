@@ -7,8 +7,8 @@ namespace Cast.RestClient.Clients.Domains
 {
     public class DomainApi : IDomainApi
     {
-        private const string industrySegmentListRoute = "domains/industrySegment";
-        private const string domainByIdRoute = "domains/{0}";
+        private const string IndustrySegmentListRoute = "domains/industrySegment";
+        private const string DomainByIdRoute = "domains/{0}";
         private readonly ICastApiClient _client;
 
         public DomainApi(ICastApiClient client)
@@ -18,7 +18,7 @@ namespace Cast.RestClient.Clients.Domains
 
         public async Task<ICastResponse<Domain>> GetDomainByIdAsync(long id)
         {
-            var uriPath = string.Format(domainByIdRoute, id);
+            var uriPath = string.Format(DomainByIdRoute, id);
             var request = new CastRequest(HttpMethod.Get, uriPath);
 
             var response = await _client.ExecuteCastRequestAsync<Domain>(request);
@@ -27,7 +27,7 @@ namespace Cast.RestClient.Clients.Domains
 
         public async Task<ICastResponse<IEnumerable<IndustrySegment>>> GetIndustrySegmentsAsync()
         {
-            var request = new CastRequest(HttpMethod.Get, industrySegmentListRoute);
+            var request = new CastRequest(HttpMethod.Get, IndustrySegmentListRoute);
 
             var response = await _client.ExecuteCastRequestAsync<IEnumerable<IndustrySegment>>(request);
 

@@ -1,4 +1,5 @@
 ﻿using Cast.RestClient.Extensions;
+using Cast.RestClient.Helpers;
 using Cast.RestClient.Http.Abstractions;
 using System.Net.Http.Json;
 
@@ -12,8 +13,8 @@ namespace Cast.RestClient.Http
 
         public CastApiClient(string baseUri, HttpClient client)
         {
-            if (baseUri == null) throw new ArgumentNullException(nameof(baseUri));
-            if (client == null) throw new ArgumentNullException(nameof(client));
+            Ensure.ArgumentNotNullOrEmptyString(baseUri, nameof(baseUri));
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _baseUri = baseUri;
             _httpClient = client;
@@ -28,7 +29,10 @@ namespace Cast.RestClient.Http
         {
             var httpMessage = new HttpRequestMessage(request.Method, request.BuildUri(BaseUri).RequestUri);
 
-            if (request.Body != null) httpMessage.Content = JsonContent.Create(request.Body);
+            if (request.Body != null)
+            {
+                httpMessage.Content = JsonContent.Create(request.Body);
+            }
 
             httpMessage.SetJsonRequestHeaders();
 
@@ -37,14 +41,14 @@ namespace Cast.RestClient.Http
                 var response = await _httpClient.SendAsync(httpMessage, cancellationToken).ConfigureAwait(false);
                 return new CastResponse<T>(response, _serializer)
                 {
-                    Request = request
+                    Request = request,
                 };
             }
             catch (Exception ex)
             {
                 return new CastResponse<T>(ex)
                 {
-                    Request = request
+                    Request = request,
                 };
             }
         }

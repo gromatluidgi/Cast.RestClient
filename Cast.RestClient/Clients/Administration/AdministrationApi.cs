@@ -6,9 +6,7 @@ namespace Cast.RestClient.Clients.Administration
 {
     internal class AdministrationApi : IAdministrationApi
     {
-        private const string companyDetailsEnpoint = "companies/{0}";
-        private const string auditLogEnpoint = "companies/{0}/audit";
-
+        private const string CompanyDetailsEnpoint = "companies/{0}";
         private readonly ICastApiClient _client;
 
         public AdministrationApi(ICastApiClient client)
@@ -18,7 +16,7 @@ namespace Cast.RestClient.Clients.Administration
 
         public async Task<ICastResponse<Company>> GetCompanyByIdAsync(int companyId)
         {
-            var uriPath = string.Format(companyDetailsEnpoint, companyId);
+            var uriPath = string.Format(CompanyDetailsEnpoint, companyId);
             var request = new CastRequest(HttpMethod.Get, uriPath);
 
             var response = await _client.ExecuteCastRequestAsync<Company>(request);

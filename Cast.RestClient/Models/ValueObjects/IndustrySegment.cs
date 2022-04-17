@@ -6,7 +6,8 @@ namespace Cast.RestClient.Models.Enums
     {
         public static readonly IndustrySegment Automotive = new IndustrySegment("Automotive");
 
-        private IndustrySegment(string name) : base(name)
+        private IndustrySegment(string name)
+            : base(name)
         {
         }
     }

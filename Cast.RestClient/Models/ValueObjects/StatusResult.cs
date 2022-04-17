@@ -5,6 +5,7 @@
         where TError : notnull
     {
         public TResult? Result { get; set; }
+
         public TError? Error { get; set; }
     }
 }
