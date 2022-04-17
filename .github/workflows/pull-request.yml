@@ -35,16 +35,16 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
 
-    - name: Unit tests with coverage report
-      run: dotnet test Cast.RestClient.Tests --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-
-    - name: Integration tests with coverage report
-      run: dotnet test Cast.RestClient.Integration.Tests --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-
+    - name: Unit tests with cobertura coverage report
+      run: dotnet test Cast.RestClient.Tests --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory coverage
+    
+    - name: Copy coverage report to predictable location
+      run: cp coverage/**/coverage.cobertura.xml coverage/coverage.cobertura.xml
+      
     - name: Generate code coverage summary report
       uses: irongut/CodeCoverageSummary@v1.2.0
       with:
-        filename: ./Cast.RestClient.Tests/coverage.opencover.xml
+        filename: ./coverage/coverage.cobertura.xml
         badge: true
         format: 'markdown'
         output: 'both'
