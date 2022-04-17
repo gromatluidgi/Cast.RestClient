@@ -24,22 +24,35 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+
     - name: Setup .NET 6
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.*
+
     - name: Restore dependencies
       run: dotnet restore
+
     - name: Build
       run: dotnet build --no-restore
+
     - name: Unit tests with coverage report
       run: dotnet test Cast.RestClient.Tests --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+
     - name: Integration tests with coverage report
       run: dotnet test Cast.RestClient.Integration.Tests --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-    - name: Run Codecov without publishing reports
-      uses: codecov/codecov-action@v2
+
+    - name: Generate code coverage summary report
+      uses: irongut/CodeCoverageSummary@v1.2.0
       with:
-        token: ${{ secrets.CODECOV_TOKEN }} 
-        fail_ci_if_error: false
-        verbose: true
-        dry_run: true
+        filename: Cast.RestClient.Tests/coverage.opencover.xml
+        badge: true
+        format: 'markdown'
+        output: 'both'
+
+    - name: Add coverage report into PR comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: github.event_name == 'pull_request'
+      with:
+        recreate: true
+        path: code-coverage-results.md
