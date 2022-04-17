@@ -24,12 +24,14 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Perform security code scan
-      uses: security-code-scan/security-code-scan-results-action@v1.3
+      uses: security-code-scan/security-code-scan-add-action@v1.2
 
-    - name: Setup .NET 6
+    - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 6.0.*
+        dotnet-version: |
+          3.1.x
+          6.0.x
 
     - name: Restore dependencies
       run: dotnet restore
