@@ -11,7 +11,7 @@ namespace Cast.RestClient.Http
         protected CastError(int? status, string message)
         {
             Status = status;
-            Message = message;
+            Message = message ?? string.Empty;
         }
 
         public int? Status { get; set; }

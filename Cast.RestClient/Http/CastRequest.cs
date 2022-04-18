@@ -1,4 +1,5 @@
 ﻿using Cast.RestClient.Http.Abstractions;
+using Cast.RestClient.Http.Queries;
 using Microsoft.AspNetCore.WebUtilities;
 
 namespace Cast.RestClient.Http

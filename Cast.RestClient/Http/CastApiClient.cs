@@ -1,6 +1,7 @@
 ﻿using Cast.RestClient.Extensions;
 using Cast.RestClient.Helpers;
 using Cast.RestClient.Http.Abstractions;
+using Cast.RestClient.Http.Serialization;
 using System.Net.Http.Json;
 
 namespace Cast.RestClient.Http
