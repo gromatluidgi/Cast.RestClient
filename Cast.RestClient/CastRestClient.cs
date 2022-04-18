@@ -12,7 +12,15 @@ namespace Cast.RestClient
 {
     public class CastRestClient : Disposable, ICastRestClient
     {
-        public CastRestClient(CastRestClientOptions options)
+        public CastRestClient(
+            ICastAuthenticationProvider authenticationProvider,
+            CastRestClientOptions options)
+            : this(options)
+        {
+            SetAuthorizationHeader(authenticationProvider.GetAuthorizationHeader());
+        }
+
+        internal CastRestClient(CastRestClientOptions options)
         {
             HttpClient = new HttpClient();
 
@@ -21,14 +29,6 @@ namespace Cast.RestClient
             Benchmark = new BenchmarkApi(CastApiClient);
             Domain = new DomainApi(CastApiClient);
             Application = new ApplicationApi(CastApiClient);
-        }
-
-        public CastRestClient(
-            ICastAuthenticationProvider authenticationProvider,
-            CastRestClientOptions options)
-            : this(options)
-        {
-            SetAuthorizationHeader(authenticationProvider.GetAuthorizationHeader());
         }
 
         public IAdministrationApi Administration { get; }

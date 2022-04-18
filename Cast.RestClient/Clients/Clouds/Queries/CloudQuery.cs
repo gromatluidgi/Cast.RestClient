@@ -1,5 +1,4 @@
-﻿using Cast.RestClient.Http;
-using System.Collections.Generic;
+﻿using Cast.RestClient.Http.Queries;
 
 namespace Cast.RestClient.Clients.Clouds.Queries
 {

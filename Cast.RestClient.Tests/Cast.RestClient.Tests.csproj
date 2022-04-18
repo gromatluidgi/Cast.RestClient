@@ -56,9 +56,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Clients\Applications\Queries\" />
 		<Folder Include="Clients\Clouds\" />
-		<Folder Include="Http\" />
 	</ItemGroup>
 
 </Project>

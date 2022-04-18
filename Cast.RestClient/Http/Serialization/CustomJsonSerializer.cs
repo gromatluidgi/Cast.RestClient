@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Cast.RestClient.Http
+namespace Cast.RestClient.Http.Serialization
 {
     public class CustomJsonSerializer : ISerializer
     {

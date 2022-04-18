@@ -1,4 +1,6 @@
-﻿namespace Cast.RestClient.Helpers
+﻿using Cast.RestClient.Extensions;
+
+namespace Cast.RestClient.Helpers
 {
     internal static class Ensure
     {
@@ -10,6 +12,42 @@
             }
 
             throw new ArgumentNullException(name);
+        }
+
+        public static void IsEnumerable(object value, string name)
+        {
+            ArgumentNotNull(value, name);
+
+            if (value.GetType().IsGenericEnumerable())
+            {
+                return;
+            }
+
+            throw new ArgumentException("Value must be an enumerable", name);
+        }
+
+        public static void IsArray(object value, string name)
+        {
+            ArgumentNotNull(value, name);
+
+            if (value.GetType().IsArray)
+            {
+                return;
+            }
+
+            throw new ArgumentException("Value must be an array", name);
+        }
+
+        public static void IsConvertibleToString(object value, string name)
+        {
+            ArgumentNotNull(value, name);
+
+            if (value.GetType().IsStringConvertible())
+            {
+                return;
+            }
+
+            throw new ArgumentException("Value must be a simple type (primitive, string, enum...)", name);
         }
 
         /// <summary>

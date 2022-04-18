@@ -1,11 +1,12 @@
-﻿using Cast.RestClient.Http;
-using System.Text.Json.Serialization;
+﻿using Cast.RestClient.Attributes;
+using Cast.RestClient.Http.Queries;
 
 namespace Cast.RestClient.Clients.Applications.Queries
 {
     public class ApplicationQuery : QueryParameters
     {
         public ApplicationQuery()
+            : this(0, 0)
         {
         }
 
@@ -16,16 +17,18 @@ namespace Cast.RestClient.Clients.Applications.Queries
             LoadExpands(expands!);
         }
 
+        [QueryParameter("maxEntryPerPage")]
         public int MaxEntryPerPage { get; }
 
+        [QueryParameter("pageOffset")]
         public int PageOffset { get; }
 
-        [JsonPropertyName("expand")]
-        public HashSet<ApplicationExpand>? Expands { get; internal set; }
+        [QueryParameter("expand")]
+        public HashSet<ApplicationExpand>? Expands { get; private set; }
 
-        private void LoadExpands(IEnumerable<ApplicationExpand> expands)
+        internal void LoadExpands(IEnumerable<ApplicationExpand> expands)
         {
-            if (expands == null)
+            if (expands == null || !expands.Any())
             {
                 return;
             }

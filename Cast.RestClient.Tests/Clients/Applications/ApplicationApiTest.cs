@@ -1,4 +1,5 @@
 ﻿using Cast.RestClient.Clients.Applications;
+using Cast.RestClient.Clients.Applications.Queries;
 using Cast.RestClient.Models;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -34,9 +35,10 @@ namespace Cast.RestClient.Tests.Clients.Applications
             // Arrange
             var fakeResponse = TestHelpers.GetFakeResponse<Application>();
             var api = new ApplicationApi(TestHelpers.GetFakeApiClientWithResponse(fakeResponse));
+            var parameters = new ApplicationQuery(0, 0, new[] { ApplicationExpand.Survey });
 
             // Act
-            var response = await api.GetApplicationByIdAsync(0, 0, null);
+            var response = await api.GetApplicationByIdAsync(0, 0, parameters);
 
             // Assert
             Assert.NotNull(response);
@@ -44,7 +46,7 @@ namespace Cast.RestClient.Tests.Clients.Applications
             Assert.NotNull(response.Request);
             Assert.Equal(HttpMethod.Get, response.Request!.Method);
             Assert.Equal("domains/0/applications/0", response.Request!.ResourcePath);
-            Assert.Equal(TestHelpers.FakeApiUrl + "/domains/0/applications/0", response.Request.RequestUri!.ToString());
+            Assert.Equal(TestHelpers.FakeApiUrl + "/domains/0/applications/0?maxEntryPerPage=0&pageOffset=0&expand=survey", response.Request.RequestUri!.ToString());
         }
 
         [Fact]
