@@ -6,11 +6,20 @@
 	<ItemGroup>
 		<PackageReference Include="StyleCop.Analyzers" 
 						  Version="1.2.0-beta.406" 
-						  PrivateAssets="all" 
-						  Condition="$(MSBuildProjectExtension) == '.csproj'" />
+						  PrivateAssets="all"
+						  Condition="$(MSBuildProjectExtension) == '.csproj' AND 
+						  !$([System.String]::Copy($(MSBuildProjectName)).Contains('Tests'))" />
+		
 		<PackageReference Include="SonarAnalyzer.CSharp" 
 						  Version="8.37.0.45539" 
-						  PrivateAssets="all" 
-						  Condition="$(MSBuildProjectExtension) == '.csproj'" />
+						  PrivateAssets="all"
+						  Condition="$(MSBuildProjectExtension) == '.csproj' AND 
+						  !$([System.String]::Copy($(MSBuildProjectName)).Contains('Tests'))" />
+
+		<PackageReference Include="Roslynator.Analyzers"
+						  Version="4.1.0"
+						  PrivateAssets="all"
+						  Condition="$(MSBuildProjectExtension) == '.csproj' AND 
+						  !$([System.String]::Copy($(MSBuildProjectName)).Contains('Tests'))" />
 	</ItemGroup>
 </Project>
