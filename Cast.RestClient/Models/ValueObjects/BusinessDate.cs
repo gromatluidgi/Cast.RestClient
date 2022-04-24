@@ -2,10 +2,7 @@
 {
     public class BusinessDate
     {
-        public static BusinessDate Null
-        {
-            get { return new BusinessDate(); }
-        }
+        public static BusinessDate Null => new();
 
         public long Time { get; protected set; }
     }

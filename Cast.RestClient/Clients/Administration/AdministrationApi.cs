@@ -19,9 +19,7 @@ namespace Cast.RestClient.Clients.Administration
             var uriPath = string.Format(CompanyDetailsEnpoint, companyId);
             var request = new CastRequest(HttpMethod.Get, uriPath);
 
-            var response = await _client.ExecuteCastRequestAsync<Company>(request);
-
-            return response;
+            return await _client.ExecuteCastRequestAsync<Company>(request);
         }
     }
 }

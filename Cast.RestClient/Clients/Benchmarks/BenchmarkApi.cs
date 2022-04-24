@@ -20,27 +20,21 @@ namespace Cast.RestClient.Clients.Benchmarks
         {
             var request = new CastRequest(HttpMethod.Get, BenchmarkAlertsRoute);
 
-            var response = await _client.ExecuteCastRequestAsync<BenchmarkAlertsAggregate>(request);
-
-            return response;
+            return await _client.ExecuteCastRequestAsync<BenchmarkAlertsAggregate>(request);
         }
 
         public async Task<ICastResponse<BenchmarkAlertsAggregate>> GetBenchmarkAlertsByTechnologiesAsync()
         {
             var request = new CastRequest(HttpMethod.Post, BenchmarkMetricsRoute);
 
-            var response = await _client.ExecuteCastRequestAsync<BenchmarkAlertsAggregate>(request);
-
-            return response;
+            return await _client.ExecuteCastRequestAsync<BenchmarkAlertsAggregate>(request);
         }
 
         public async Task<ICastResponse<Benchmark>> GetComputedBenchmarkMetricsAsync()
         {
             var request = new CastRequest(HttpMethod.Get, BenchmarkMetricsRoute);
 
-            var response = await _client.ExecuteCastRequestAsync<Benchmark>(request);
-
-            return response;
+            return await _client.ExecuteCastRequestAsync<Benchmark>(request);
         }
     }
 }

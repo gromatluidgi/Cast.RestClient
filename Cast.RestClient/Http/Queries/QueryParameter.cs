@@ -39,8 +39,7 @@ namespace Cast.RestClient.Http.Queries
             {
                 return (prop, value) =>
                 {
-                    var query = QueryHelper.ParametersFromDynamicEnumerable(prop.Name, value);
-                    return query;
+                    return QueryHelper.ParametersFromDynamicEnumerable(prop.Name, value);
                 };
             }
 
@@ -48,8 +47,7 @@ namespace Cast.RestClient.Http.Queries
             {
                 return (prop, value) =>
                 {
-                    var query = QueryHelper.ParametersFromDynamicEnumerable(prop.Name, value);
-                    return query;
+                    return QueryHelper.ParametersFromDynamicEnumerable(prop.Name, value);
                 };
             }
 

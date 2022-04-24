@@ -6,7 +6,7 @@ namespace Cast.RestClient.Http.Queries
     public abstract class QueryParameters
     {
         private static readonly ConcurrentDictionary<Type, List<QueryParameter>> _propertiesMap =
-            new ConcurrentDictionary<Type, List<QueryParameter>>();
+            new();
 
         /// <summary>
         /// Retrieve any public properties from instance type.

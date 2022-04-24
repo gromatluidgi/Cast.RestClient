@@ -18,7 +18,7 @@ namespace Cast.RestClient.Tests.Authentication
         public void GetAuthorizationHeader_Returns_BearerAuthValue()
         {
             // Arrange
-            string token = "test";
+            var token = "test";
 
             // Act
             var authProvider = new CastBearerAuthenticationProvider(token);

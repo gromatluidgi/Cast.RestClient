@@ -7,11 +7,9 @@
 Cast.RestClient is a library that provides an easy way to interact with the
 [Cast Hightlight API](https://rpa.casthighlight.com/api-doc/index.html).
 
-## TODO
+## Warning
 
-- Implements every endpoints
-- Allow custom http client/proxy
-- Custom serializer
+This project is under active development, however **no release is planned**.
 
 ## Usage
 
@@ -55,7 +53,7 @@ service.AddCastRestClient(authProvider, options);
 
 Cast.RestClient is a single assembly designed to be easy to deploy anywhere.
 
-To clone and build it locally click the "Clone in Desktop" button above or run the following git commands.
+To clone and build it locally, click the **"Clone in Desktop"** button above or run the following **git commands**.
 
 ```
 git clone git@github.com:gromatluidgi/Cast.RestClient.git CastRestClient
@@ -63,8 +61,55 @@ cd CastRestClient
 dotnet build
 ```
 
-## Test
+## Tests
 
+### Unit Tests
+
+##### Without coverage report
 ```
-dotnet test
+dotnet test Cast.RestClient.Tests
 ```
+
+##### With Cobertura report
+```
+dotnet test Cast.RestClient.Tests /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
+```
+
+##### With OpenCover report
+```
+dotnet test Cast.RestClient.Tests /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+```
+
+### Integration Tests
+
+You **MUST** rename config.sample.json into config.json, if running integration tests on a debug environment.
+
+##### Without coverage report
+```
+dotnet test Cast.RestClient.Integration.Tests
+```
+
+##### With Cobertura report
+```
+dotnet test Cast.RestClient.Integration.Tests /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
+```
+
+##### With OpenCover report
+```
+dotnet test Cast.RestClient.Integration.Tests /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+```
+
+### Report Generator
+https://github.com/danielpalme/ReportGenerator
+```
+reportgenerator -reports:"coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Html
+```
+
+## Todo
+
+### Applications Endpoint
+
+| Endpoint                                                                                   | Method | Desc                                      |
+| ------------------------------------------------------------------------------------------ | ------ | ----------------------------------------- |
+| /domains/{domainId}/applications/{applicationId}/campaigns/{campaignId}/submit             | POST   | Submit result for application             |
+| /domains/{domainId}/applications/{applicationId}/campaigns/{campaignId}/surveys/{surveyId} | POST   | Answer survey for application on campaign |

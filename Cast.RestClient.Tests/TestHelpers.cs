@@ -12,6 +12,12 @@ namespace Cast.RestClient.Tests
     {
         public static readonly string FakeApiUrl = "https://fakeapi.com";
 
+        public static ICastApiClient GetFakeApiClient()
+        {
+            var client = new Mock<ICastApiClient>();
+            return client.Object;
+        }
+
         public static ICastApiClient GetFakeApiClientWithResponse<T>(ICastResponse<T> response)
         {
             var client = new Mock<ICastApiClient>();

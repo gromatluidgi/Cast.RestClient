@@ -8,8 +8,5 @@ namespace Cast.RestClient.Models.ValueObjects
     [JsonConverter(typeof(AlertAggregateJsonConverterFactory))]
     public class TopRiskAggregate : Aggregate<string, Aggregate<string, Aggregate<string, List<IAlert>>>>
     {
-        public TopRiskAggregate()
-        {
-        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Cast.RestClient.Clients.Applications.Queries;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace Cast.RestClient.Tests.Clients.Applications.Queries
