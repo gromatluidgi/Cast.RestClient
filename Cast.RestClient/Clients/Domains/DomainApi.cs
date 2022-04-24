@@ -1,7 +1,7 @@
 ﻿using Cast.RestClient.Http;
 using Cast.RestClient.Http.Abstractions;
 using Cast.RestClient.Models;
-using Cast.RestClient.Models.Enums;
+using Cast.RestClient.Models.Enumerations;
 
 namespace Cast.RestClient.Clients.Domains
 {
@@ -21,17 +21,14 @@ namespace Cast.RestClient.Clients.Domains
             var uriPath = string.Format(DomainByIdRoute, id);
             var request = new CastRequest(HttpMethod.Get, uriPath);
 
-            var response = await _client.ExecuteCastRequestAsync<Domain>(request);
-            return response;
+            return await _client.ExecuteCastRequestAsync<Domain>(request);
         }
 
-        public async Task<ICastResponse<IEnumerable<IndustrySegment>>> GetIndustrySegmentsAsync()
+        public async Task<ICastResponse<ICollection<IndustrySegment>>> GetIndustrySegmentsAsync()
         {
             var request = new CastRequest(HttpMethod.Get, IndustrySegmentListRoute);
 
-            var response = await _client.ExecuteCastRequestAsync<IEnumerable<IndustrySegment>>(request);
-
-            return response;
+            return await _client.ExecuteCastRequestAsync<ICollection<IndustrySegment>>(request);
         }
     }
 }

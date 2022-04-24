@@ -72,7 +72,7 @@ namespace Cast.RestClient.Helpers
             ArgumentNotNull(url, nameof(url));
 
             Uri uriResult;
-            bool result = Uri.TryCreate(url, UriKind.Absolute, out uriResult!);
+            var result = Uri.TryCreate(url, UriKind.Absolute, out uriResult!);
 
             if (!result)
             {

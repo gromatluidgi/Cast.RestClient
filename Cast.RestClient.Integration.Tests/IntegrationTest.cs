@@ -9,6 +9,7 @@ namespace Cast.RestClient.Integration.Tests
     public abstract class IntegrationTest
     {
         protected const long DemoApplicationId = 28485;
+        protected const long DemoProjectId = 6273;
 
         private readonly IConfiguration _configuration;
 

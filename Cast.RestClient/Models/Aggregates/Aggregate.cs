@@ -2,9 +2,6 @@
 {
     public class Aggregate
     {
-        public Aggregate()
-        {
-        }
     }
 
     public class Aggregate<TKey, TValue> : Aggregate
@@ -15,6 +12,6 @@
             Data = new Dictionary<TKey, TValue>();
         }
 
-        public IDictionary<TKey, TValue> Data { get; internal set; }
+        public IDictionary<TKey, TValue> Data { get; }
     }
 }

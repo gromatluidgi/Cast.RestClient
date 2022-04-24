@@ -11,7 +11,7 @@ namespace Cast.RestClient.Extensions
         /// <returns>String from attribute value.</returns>
         internal static string GetStringValue(this Enum enumValue)
         {
-            string stringValue = enumValue.ToString();
+            var stringValue = enumValue.ToString();
 
             var type = enumValue.GetType();
             var field = type.GetField(enumValue.ToString());

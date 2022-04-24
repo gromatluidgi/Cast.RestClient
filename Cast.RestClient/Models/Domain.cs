@@ -20,9 +20,6 @@
 
         public Domain? Parent { get; set; }
 
-        internal static Domain Null
-        {
-            get { return new Domain(); }
-        }
+        internal static Domain Null => new();
     }
 }

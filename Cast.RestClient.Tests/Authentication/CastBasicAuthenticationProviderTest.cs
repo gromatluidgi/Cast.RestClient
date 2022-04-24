@@ -9,8 +9,8 @@ namespace Cast.RestClient.Tests.Authentication
         public void GetAuthorizationHeader_Returns_BasicAuthValue()
         {
             // Arrange
-            string login = "Test";
-            string password = "Test";
+            var login = "Test";
+            var password = "Test";
 
             // Act
             var authProvider = new CastBasicAuthenticationProvider(login, password);

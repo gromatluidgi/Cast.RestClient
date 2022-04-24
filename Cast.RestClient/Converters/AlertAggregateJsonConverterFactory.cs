@@ -41,9 +41,7 @@ namespace Cast.RestClient.Converters
             var converterType = typeof(AlertAggregateJsonConverter<,>)
                 .MakeGenericType(keyType, valueType);
 
-            var converter = (JsonConverter)Activator.CreateInstance(converterType, args: new object[] { options })!;
-
-            return converter;
+            return (JsonConverter)Activator.CreateInstance(converterType, args: new object[] { options })!;
         }
 
         private sealed class AlertAggregateJsonConverter<TKey, TValue> : JsonConverter<Aggregate<TKey, TValue>>

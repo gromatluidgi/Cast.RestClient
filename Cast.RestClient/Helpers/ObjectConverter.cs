@@ -19,7 +19,7 @@ namespace Cast.RestClient.Helpers
             var genericList = typeof(List<>).MakeGenericType(elemType);
             var instance = (IList)Activator.CreateInstance(genericList);
 
-            for (int i = 0; i < array.Length; i++)
+            for (var i = 0; i < array.Length; i++)
             {
                 instance.Add(array[i]);
             }

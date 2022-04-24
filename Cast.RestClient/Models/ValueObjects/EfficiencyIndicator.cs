@@ -2,10 +2,7 @@
 {
     public class EfficiencyIndicator
     {
-        public static EfficiencyIndicator Null
-        {
-            get { return new EfficiencyIndicator(); }
-        }
+        public static EfficiencyIndicator Null => new();
 
         public double SoftwareResiliency { get; internal set; }
 

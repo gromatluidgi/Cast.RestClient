@@ -8,8 +8,6 @@ namespace Cast.RestClient.Http
 {
     internal class CastApiClient : ICastApiClient
     {
-        private readonly string _baseUri;
-        private readonly HttpClient _httpClient;
         private readonly ISerializer _serializer;
 
         public CastApiClient(string baseUri, HttpClient client)
@@ -17,14 +15,14 @@ namespace Cast.RestClient.Http
             Ensure.ArgumentNotNullOrEmptyString(baseUri, nameof(baseUri));
             Ensure.ArgumentNotNull(client, nameof(client));
 
-            _baseUri = baseUri;
-            _httpClient = client;
+            BaseUri = baseUri;
+            HttpClient = client;
             _serializer = new CustomJsonSerializer();
         }
 
-        public string BaseUri { get => _baseUri; }
+        public string BaseUri { get; }
 
-        public HttpClient HttpClient => _httpClient;
+        public HttpClient HttpClient { get; }
 
         public async Task<ICastResponse<T>> ExecuteCastRequestAsync<T>(ICastRequest request, CancellationToken cancellationToken = default)
         {
@@ -39,7 +37,7 @@ namespace Cast.RestClient.Http
 
             try
             {
-                var response = await _httpClient.SendAsync(httpMessage, cancellationToken).ConfigureAwait(false);
+                var response = await HttpClient.SendAsync(httpMessage, cancellationToken).ConfigureAwait(false);
                 return new CastResponse<T>(response, _serializer)
                 {
                     Request = request,
@@ -63,7 +61,7 @@ namespace Cast.RestClient.Http
         {
             try
             {
-                var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+                var response = await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
                 return new CastResponse<T>(response, _serializer);
             }
             catch (Exception ex)
