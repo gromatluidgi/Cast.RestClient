@@ -1,0 +1,12 @@
+# Basic dependabot.yml file with
+# minimum configuration for nuget
+
+version: 2
+updates:
+  # Enable version updates for nuget
+  - package-ecosystem: "nuget"
+    # Look for Nuget dependency info in the `root` directory
+    directory: "/"
+    # Check the nuget registry for updates every day (weekdays)
+    schedule:
+      interval: "daily"
