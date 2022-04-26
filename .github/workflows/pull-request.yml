@@ -40,7 +40,7 @@ jobs:
     
     - name: Copy coverage report to predictable location
       run: cp coverage/**/coverage.cobertura.xml coverage/coverage.cobertura.xml
-      if: github.actor!= 'dependabot-preview[bot]'
+      if: github.actor!= 'dependabot[bot]'
       
     - name: Generate code coverage summary report
       uses: irongut/CodeCoverageSummary@v1.2.0
@@ -49,11 +49,11 @@ jobs:
         badge: true
         format: 'markdown'
         output: 'both'
-      if: github.actor!= 'dependabot-preview[bot]'
+      if: github.actor!= 'dependabot[bot]'
 
     - name: Add coverage report into PR comment
       uses: marocchino/sticky-pull-request-comment@v2
-      if: github.event_name == 'pull_request' && github.actor!= 'dependabot-preview[bot]'
+      if: github.event_name == 'pull_request' && github.actor!= 'dependabot[bot]'
       with:
         recreate: true
         path: code-coverage-results.md
