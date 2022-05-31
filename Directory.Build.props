@@ -17,7 +17,7 @@
 						  !$([System.String]::Copy($(MSBuildProjectName)).Contains('Tests'))" />
 
 		<PackageReference Include="Roslynator.Analyzers"
-						  Version="4.1.0"
+						  Version="4.1.1"
 						  PrivateAssets="all"
 						  Condition="$(MSBuildProjectExtension) == '.csproj' AND 
 						  !$([System.String]::Copy($(MSBuildProjectName)).Contains('Tests'))" />
