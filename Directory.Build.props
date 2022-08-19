@@ -11,7 +11,7 @@
 						  !$([System.String]::Copy($(MSBuildProjectName)).Contains('Tests'))" />
 		
 		<PackageReference Include="SonarAnalyzer.CSharp" 
-						  Version="8.41.0.50478" 
+						  Version="8.44.0.52574" 
 						  PrivateAssets="all"
 						  Condition="$(MSBuildProjectExtension) == '.csproj' AND 
 						  !$([System.String]::Copy($(MSBuildProjectName)).Contains('Tests'))" />
